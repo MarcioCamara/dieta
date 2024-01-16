@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <script>
+      window.onload = () => {
+        const lunch = {
+          simpleCarbs: [
+            {
+              quantity: 50,
+              item: "Arroz Branco",
+            },
+            {
+              quantity: 120,
+              item: "Batata Inglesa",
+            },
+            {
+              quantity: 120,
+              item: "Abobora Cabotia",
+            },
+            {
+              quantity: 100,
+              item: "Batata Doce",
+            },
+          ],
+          complexCarbs: [
+            {
+              quantity: 100,
+              item: "Feijão",
+            },
+            {
+              quantity: 100,
+              item: "Quinoa",
+            },
+            {
+              quantity: 100,
+              item: "Lentilha",
+            },
+            {
+              quantity: 50,
+              item: "Arroz Branco",
+            },
+          ],
+          proteins: [
+            {
+              quantity: 150,
+              item: "Peito de Frango",
+            },
+            {
+              quantity: 150,
+              item: "Carne Vermelha",
+            },
+            {
+              quantity: 150,
+              item: "Peixe",
+            },
+            {
+              quantity: 150,
+              item: "Lombo Suíno",
+            },
+          ],
+          desserts: [
+            {
+              quantity: 25,
+              item: "Chocolate 50%+",
+            },
+          ],
+        };
+
+        const dinner = {
+          simpleCarbs: [
+            {
+              quantity: 50,
+              item: "Arroz Branco",
+            },
+            {
+              quantity: 120,
+              item: "Batata Inglesa",
+            },
+            {
+              quantity: 120,
+              item: "Abobora Cabotia",
+            },
+            {
+              quantity: 100,
+              item: "Batata Doce",
+            },
+            {
+              quantity: 50,
+              item: "Grão de Bico",
+            },
+          ],
+          complexCarbs: [
+            {
+              quantity: 100,
+              item: "Feijão",
+            },
+            {
+              quantity: 100,
+              item: "Quinoa",
+            },
+            {
+              quantity: 100,
+              item: "Lentilha",
+            },
+            {
+              quantity: 50,
+              item: "Arroz Branco",
+            },
+          ],
+          proteins: [
+            {
+              quantity: 150,
+              item: "Peito de Frango",
+            },
+            {
+              quantity: 150,
+              item: "Carne Vermelha",
+            },
+            {
+              quantity: 150,
+              item: "Peixe",
+            },
+          ],
+          desserts: [
+            {
+              quantity: 150,
+              item: "Abacaxi + Canela",
+            },
+            {
+              quantity: 150,
+              item: "Mamão + Canela",
+            },
+            {
+              quantity: 100,
+              item: "Banana + Canela",
+            },
+            {
+              quantity: 150,
+              item: "Maçã + Canela",
+            },
+            {
+              quantity: 150,
+              item: "Goiaba + Canela",
+            },
+            {
+              quantity: 300,
+              item: "Melancia + Canela",
+            },
+          ],
+        };
+
+        let menu = [];
+
+        function generateMenu() {
+          const weekdays = Array(7)
+            .fill(new Date(new Date()))
+            .map((el, idx) =>
+              new Date(
+                el.setDate(el.getDate() - el.getDay() + idx)
+              ).toLocaleDateString("pt-br", { weekday: "long" })
+            );
+
+          const menu = weekdays.map((weekday) => {
+            return {
+              day: weekday,
+              lunch: {
+                protein:
+                  lunch.proteins[
+                    Math.floor(Math.random() * lunch.proteins.length)
+                  ],
+                simpleCarb:
+                  lunch.simpleCarbs[
+                    Math.floor(Math.random() * lunch.simpleCarbs.length)
+                  ],
+                complexCarb:
+                  lunch.complexCarbs[
+                    Math.floor(Math.random() * lunch.complexCarbs.length)
+                  ],
+                desserts:
+                  lunch.desserts[
+                    Math.floor(Math.random() * lunch.desserts.length)
+                  ],
+                extras: [
+                  {
+                    quantity: 12,
+                    item: "Azeite",
+                  },
+                  {
+                    quantity: null,
+                    item: "Salada",
+                  },
+                  {
+                    quantity: null,
+                    item: "Legumes",
+                  },
+                ],
+              },
+              dinner: {
+                protein:
+                  dinner.proteins[
+                    Math.floor(Math.random() * dinner.proteins.length)
+                  ],
+                simpleCarb:
+                  dinner.simpleCarbs[
+                    Math.floor(Math.random() * dinner.simpleCarbs.length)
+                  ],
+                complexCarb:
+                  dinner.complexCarbs[
+                    Math.floor(Math.random() * dinner.complexCarbs.length)
+                  ],
+                desserts:
+                  dinner.desserts[
+                    Math.floor(Math.random() * dinner.desserts.length)
+                  ],
+                extras: [
+                  {
+                    quantity: 6,
+                    item: "Azeite",
+                  },
+                  {
+                    quantity: null,
+                    item: "Salada",
+                  },
+                  {
+                    quantity: null,
+                    item: "Legumes",
+                  },
+                ],
+              },
+            };
+          });
+
+          const lunchContainer = document.getElementById("lunch-container");
+          let lunchContent = "";
+
+          for (let i = 0; i < menu.length; i++) {
+            const item = menu[i];
+
+            const lunchExtras = item.lunch.extras.map((extra) => {
+              return `${extra.quantity ? extra.quantity : ""} ${extra.item}`;
+            });
+
+            lunchContent += `
+              <div style="display: flex; flex-direction: column; margin: 8px;">
+                <span style="font-weight: bold; text-transform: capitalize; font-size: 1.5rem; margin: 16px 0;">${item.day}</span>
+
+                <span>
+                  ${item.lunch.complexCarb.quantity}g de ${item.lunch.complexCarb.item}
+                </span>
+
+                <span>
+                  ${item.lunch.simpleCarb.quantity}g de ${item.lunch.simpleCarb.item}
+                </span>
+            
+                <span>
+                  ${item.lunch.protein.quantity}g de ${item.lunch.protein.item}
+                </span>
+
+                <span>
+                  ${lunchExtras}
+                </span>
+                
+                <span>
+                  ${item.lunch.desserts.quantity}g de ${item.lunch.desserts.item}
+                </span>
+              </div>
+            `;
+          }
+
+          lunchContainer.innerHTML = lunchContent;
+
+          // -----------------------
+
+          const dinnerContainer = document.getElementById("dinner-container");
+          let dinnerContent = "";
+
+          for (let i = 0; i < menu.length; i++) {
+            const item = menu[i];
+
+            const dinnerExtras = item.dinner.extras.map((extra) => {
+              return `${extra.quantity ? extra.quantity : ""} ${extra.item}`;
+            });
+
+            dinnerContent += `
+              <div style="display: flex; flex-direction: column; margin: 8px;">
+                <span style="font-weight: bold; text-transform: capitalize; font-size: 1.5rem; margin: 16px 0;">${item.day}</span>
+
+                <span>
+                  ${item.dinner.complexCarb.quantity}g de ${item.dinner.complexCarb.item}
+                </span>
+
+                <span>
+                  ${item.dinner.simpleCarb.quantity}g de ${item.dinner.simpleCarb.item}
+                </span>
+            
+                <span>
+                  ${item.dinner.protein.quantity}g de ${item.dinner.protein.item}
+                </span>
+
+                <span>
+                  ${dinnerExtras}
+                </span>
+                
+                <span>
+                  ${item.dinner.desserts.quantity}g de ${item.dinner.desserts.item}
+                </span>
+              </div>
+            `;
+          }
+
+          dinnerContainer.innerHTML = dinnerContent;
+        }
+
+        document
+          .getElementById("button")
+          .addEventListener("click", generateMenu);
+      };
+    </script>
+  </head>
+  <body>
+    <button id="button">Gerar</button>
+    <br />
+
+    <h3>Almoço:</h3>
+    <div id="lunch-container" style="display: flex"></div>
+
+    <h3>Jantar:</h3>
+    <div id="dinner-container" style="display: flex"></div>
+  </body>
+</html>
